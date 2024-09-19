@@ -8,11 +8,13 @@ public class Solution {
 
         ArrayList<Integer> arrList = new ArrayList<>();
         arrList.add(arr[0]);
+        int lastInt = arr[0];
 
         for (int i = 1; i < arr.length; i++) {
             int a = arr[i];
-            if (arrList.get(arrList.size() - 1) != a) {
+            if (lastInt != a) {
                 arrList.add(a);
+                lastInt = a;
             }
         }
 
