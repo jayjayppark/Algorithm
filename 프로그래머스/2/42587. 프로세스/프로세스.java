@@ -1,31 +1,28 @@
-import java.util.LinkedList;
+import java.util.*;
 
 class Solution {
     public int solution(int[] priorities, int location) {
-        LinkedList<int[]> ll = new LinkedList<>();
-        for (int i = 0; i < priorities.length; i++) {
-            ll.add(new int[]{i, priorities[i]});
-        }
+        int answer = 1;
+        PriorityQueue p = new PriorityQueue<>(Collections.reverseOrder());;
 
-        int answer = 0;
-        while (!ll.isEmpty()) {
-            int max = 0;
-            int index = 0;
-            for (int i = 0; i < ll.size(); i++) {
-                if (ll.get(i)[1] > max) {
-                    max = ll.get(i)[1];
-                    index = i;
+        for(int i=0; i<priorities.length; i++){
+            p.add(priorities[i]);
+            System.out.println(p);
+        }
+        System.out.println(p);
+
+        while(!p.isEmpty()){
+            for(int i=0; i<priorities.length; i++){
+                if(priorities[i] == (int)p.peek()){
+                    if(i == location){
+                        return answer;
+                    }
+                    p.poll();
+                    answer++;
                 }
             }
-            for (int j = 0; j < index; j++) {
-                ll.offerLast(ll.pollFirst());
-            }
-            if (ll.pollFirst()[0] == location) {
-                answer += 1;
-                return answer;
-            }
-            answer += 1;
         }
+
         return answer;
     }
 }
