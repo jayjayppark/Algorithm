@@ -1,24 +1,29 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Arrays;
 
 class Solution {
-    public int solution(int[] priorities, int location) {
-        int answer = 1;
-        PriorityQueue p = new PriorityQueue<>(Collections.reverseOrder());;
-
-        for(int i=0; i<priorities.length; i++){
-            p.add(priorities[i]);
-            System.out.println(p);
+    public static int solution(int[] priorities, int location) {
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        for (int k : priorities) {
+            ad.offer(k);
         }
-        System.out.println(p);
+        Arrays.sort(priorities);
 
-        while(!p.isEmpty()){
-            for(int i=0; i<priorities.length; i++){
-                if(priorities[i] == (int)p.peek()){
-                    if(i == location){
-                        return answer;
-                    }
-                    p.poll();
-                    answer++;
+        int answer = 0;
+        int size = priorities.length - 1;
+        while (!ad.isEmpty()) {
+            Integer a = ad.poll();
+            if (a == priorities[size - answer]) {
+                answer++;
+                location--;
+                if (location < 0) {
+                    break;
+                }
+            } else {
+                ad.offer(a);
+                location--;
+                if (location < 0) {
+                    location = ad.size() - 1;
                 }
             }
         }
