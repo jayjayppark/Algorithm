@@ -1,45 +1,33 @@
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Arrays;
 
 class Solution {
     public int solution(int[][] jobs) {
-        PriorityQueue<int[]> pq1 = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[1] != o2[1]) {
-                    return Integer.compare(o1[1], o2[1]);
-                } else {
-                    return Integer.compare(o1[0], o2[0]);
-                }
-            }
-        });
-        PriorityQueue<int[]> pq2 = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0] - o2[0];
-            }
-        });
+        Arrays.sort(jobs, (o1, o2) -> o1[0] - o2[0]);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
 
-        for (int[] a : jobs) {
-            pq2.offer(a);
-        }
         int curTime = 0;
+        int jobLen = jobs.length;
         int count = 0;
-        int size = jobs.length;
+        int jobIndex = 0;
         int answer = 0;
-        while (count < size) {
-            while (!pq2.isEmpty() && pq2.peek()[0] <= curTime) {
-                pq1.offer(pq2.poll());
+        
+        while(count < jobLen) {
+            while (jobIndex < jobLen && jobs[jobIndex][0] <= curTime) {
+                pq.offer(jobs[jobIndex]);
+                jobIndex++;
             }
-            if (pq1.isEmpty()) {
-                curTime = pq2.peek()[0];
+            
+            if (pq.isEmpty()) {
+                curTime = jobs[jobIndex][0];
             } else {
-                int[] temp = pq1.poll();
+                int[] temp = pq.poll();
+                count++;
                 curTime += temp[1];
                 answer += curTime - temp[0];
-                count++;
             }
         }
-        return answer / size;
+        return answer / jobLen;
     }
 }
