@@ -5,12 +5,12 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
+        br.readLine();
         String[] splitNums = br.readLine().split(" ");
         String v = br.readLine();
         int solution = 0;
-        for (int i = 0; i < N; i++) {
-            if (v.equals(splitNums[i])) {
+        for (String cur : splitNums) {
+            if (cur.equals(v)) {
                 solution++;
             }
         }
