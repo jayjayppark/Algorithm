@@ -21,5 +21,6 @@ class Main {
             cur = br.readLine().charAt(0);
         }
         System.out.print(tmp);
+        br.close();
     }
 }
